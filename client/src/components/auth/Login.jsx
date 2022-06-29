@@ -38,7 +38,7 @@ function Login() {
   };
 
   return (
-    <div className="container">
+    <div className="">
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Login to Your Account
