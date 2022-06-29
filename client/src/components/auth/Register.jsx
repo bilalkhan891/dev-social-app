@@ -1,8 +1,11 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
+import { register } from "../../actions/auth";
+import PropTypes from "prop-types";
 
-function Register() {
+function Register({ setAlert, register }) {
   const [formData, setFormDate] = useState({
     name: "",
     email: "",
@@ -21,28 +24,14 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password !== password2) return console.log("Passwords did not match!");
-
-    try {
-      const newUser = {
-        name,
-        email,
-        password,
-      };
-      const config = {
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      const response = await axios.post("/api/users", newUser, config);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error.request.response);
+    if (password !== password2) {
+      return setAlert("Passwords did not match!", "danger");
     }
+    register({ name, email, password });
   };
 
   return (
-    <div className="container">
+    <div className="">
       <h1 className="large text-primary">Sign Up</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Create Your Account
@@ -100,4 +89,9 @@ function Register() {
   );
 }
 
-export default Register;
+Register.prototype = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+};
+
+export default connect(null, { setAlert, register })(Register);

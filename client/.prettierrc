@@ -1,4 +1,5 @@
 {
   "printWidth": 80,
-  "endOfLine": "lf"
+  "embeddedLanguageFormatting": "auto",
+  "formatOnSave": false
 }
