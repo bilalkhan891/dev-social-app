@@ -1,23 +1,33 @@
-const express = require("express")
-const connectDB = require('./config/db')
+const express = require("express");
+const connectDB = require("./config/db");
 
-const app = express()
+const app = express();
+
+// Utils
+const utils = require("./utils/utils");
 
 // Connect DB
-connectDB()
+connectDB();
 
 // Init Middleware
-app.use(express.json())
+app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Nothing on this route!")
-})
+  res.send("Nothing on this route!");
+});
 
 // Define Routes
-app.use('/api/users', require('./routes/api/users'))
-app.use('/api/auth', require('./routes/api/auth'))
-app.use('/api/profile', require('./routes/api/profile'))
-app.use('/api/posts', require('./routes/api/posts'))
+app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/profile", require("./routes/api/profile"));
+app.use("/api/posts", require("./routes/api/posts"));
 
-const port = process.env.PORT || 5000
-app.listen(port, () => console.log(`Backend Listening on Port ${port}`, `Local: http://localhost:${port}`))
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  utils.init();
+  console.log(utils.init());
+  console.log(
+    `Backend Listening on Port ${port}`,
+    `Local: http://localhost:${port}`
+  );
+});
