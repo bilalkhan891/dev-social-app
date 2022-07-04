@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../../actions/auth";
+import Alert from "../layout/Alert";
 
-function Login() {
+function Login({ login, isAuthenticated }) {
   const [formData, setFormDate] = useState({
     email: "",
     password: "",
@@ -19,26 +22,17 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const newUser = {
-        email,
-        password,
-      };
-      const config = {
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      const response = await axios.post("/api/users", newUser, config);
-      console.log(response.data);
-    } catch (error) {
-      console.log(error.request.response);
-    }
+    login({ email, password });
   };
 
+  // Redirect if logged in
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" />;
+  }
+
   return (
-    <div className="">
+    <div className="container">
+      <Alert />
       <h1 className="large text-primary">Sign In</h1>
       <p className="lead">
         <i className="fas fa-user"></i> Login to Your Account
@@ -53,8 +47,7 @@ function Login() {
             value={email}
           />
           <small className="form-text">
-            This site uses Gravatar so if you want a profile image, use a
-            Gravatar email
+            This site uses Gravatar so if you want a profile image, use a Gravatar email
           </small>
         </div>
         <div className="form-group">
@@ -76,4 +69,13 @@ function Login() {
   );
 }
 
-export default Login;
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+
+const mapStateToProp = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProp, { login })(Login);

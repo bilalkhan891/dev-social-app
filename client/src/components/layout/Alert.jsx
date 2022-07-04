@@ -11,7 +11,9 @@ const Alert = ({ alerts }) =>
       id={`id-${alert.id}`}
       className={`alert alert-${alert.alertType}`}
     >
-      {alert.msg}
+      <p>
+        {alert.msg} {console.log(alert)}
+      </p>
     </div>
   ));
 
