@@ -8,6 +8,7 @@ import {
   AUTH_ERROR,
   CLEAR_PROFILE,
   LOGOUT,
+  ACCOUNT_DELETED,
 } from "./Types";
 import { setAlert } from "./alert";
 import setAuthToken from "../utils/setAuthToken";
