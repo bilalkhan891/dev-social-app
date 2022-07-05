@@ -9,6 +9,7 @@ import ProfileTop from "./profile-partials/ProfileTop";
 import ProfileAbout from "./profile-partials/ProfileAbout";
 import ProfileEducation from "./profile-partials/ProfileEducation";
 import ProfileExperience from "./profile-partials/ProfileExperience";
+import ProfileGithub from "./profile-partials/ProfileGithub";
 
 const Profile = ({ loading, auth, profile }) => {
   const id = useParams().id;
@@ -37,6 +38,7 @@ const Profile = ({ loading, auth, profile }) => {
             <ProfileAbout profile={profile} />
             <ProfileExperience profile={profile} />
             <ProfileEducation profile={profile} />
+            <ProfileGithub profile={profile} />
           </div>
         </div>
       )}
