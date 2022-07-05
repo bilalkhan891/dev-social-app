@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
 import Alert from "./Alert";
 
-function EditProfile({ state, profile: { profile, loading }, createProfile, history }) {
+function EditProfile({
+  state,
+  profile: { profile, profiles, loading },
+  createProfile,
+  history,
+}) {
   const [formData, setFormData] = useState({
     company: "",
     website: "",
@@ -41,6 +46,8 @@ function EditProfile({ state, profile: { profile, loading }, createProfile, hist
   history = useNavigate();
   React.useEffect(() => {
     getCurrentProfile();
+    console.log(profile);
+    console.log(profiles);
     setFormData({
       company: loading || !profile.company ? "" : profile.company,
       website: loading || !profile.website ? "" : profile.website,
@@ -68,6 +75,7 @@ function EditProfile({ state, profile: { profile, loading }, createProfile, hist
   const handleFormSubmit = () => (e) => {
     e.preventDefault();
     createProfile(formData, history, true);
+    <Navigate to="/dashboard" />;
   };
 
   const handleInputChange = () => (e) => {

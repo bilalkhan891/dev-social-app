@@ -10,10 +10,15 @@ function NavBar({ logout, auth: { isAuthenticated, loading } }) {
   const authLinks = (
     <ul>
       <li>
+        <Link to="/profiles">Developers</Link>
+      </li>
+      <li>
+        <Link to="/dashboard">Dashboard</Link>
+      </li>
+      <li>
         <a href="#!" onClick={handleLogout}>
           Logout
         </a>
-        <Link to="/dashboard" />
       </li>
     </ul>
   );

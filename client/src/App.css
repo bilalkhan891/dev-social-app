@@ -505,6 +505,20 @@ button {
 .lds-ripple div:nth-child(2) {
   animation-delay: -0.5s;
 }
+.spinner-outter {
+    position: fixed;
+    width: 100vh;
+    height: 100vh;
+    background: #8a8a8a54;
+    backdrop-filter: blur(8px);
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
 @keyframes lds-ripple {
   0% {
     top: 36px;

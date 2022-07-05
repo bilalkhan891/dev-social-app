@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { getCurrentProfile } from "../../actions/profile";
+import { deleteProfile, getCurrentProfile } from "../../actions/profile";
 import Spinner from "./Spinner";
 import { Link } from "react-router-dom";
 import DashboardActions from "./DashboardActions";
@@ -13,13 +13,15 @@ const Dashboard = ({
   getCurrentProfile,
   auth: { user },
   profile: { profile, loading },
+  deleteProfile,
 }) => {
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
 
   const handleAccDelete = () => (e) => {
-    console.log("handleDeleteAcc");
+    console.log(e);
+    deleteProfile();
   };
 
   return (
@@ -63,6 +65,7 @@ Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  deleteProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProp = (state) => ({
@@ -72,4 +75,5 @@ const mapStateToProp = (state) => ({
 
 export default connect(mapStateToProp, {
   getCurrentProfile,
+  deleteProfile,
 })(Dashboard);

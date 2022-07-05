@@ -53,7 +53,7 @@ function CreateProfile({ state, createProfile, history }) {
 
   const handleFormSubmit = () => (e) => {
     e.preventDefault();
-    // createProfile(formData, history);
+    createProfile(formData, history);
   };
 
   const handleInputChange = () => (e) => {

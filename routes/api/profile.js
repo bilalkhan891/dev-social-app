@@ -23,6 +23,7 @@ const {
 router.get("/", auth, async (req, res) => {
   try {
     let profiles = await Profile.find().populate("user", ["name", "avatar"]);
+    console.log(profiles);
     res.json(profiles);
   } catch (err) {
     console.log(err.message);
@@ -172,7 +173,7 @@ router.put("/experience", [experienceValidation, auth], async (req, res) => {
   const newExp = { title, company, location, from, to, current, description };
   try {
     // Find user in user collection
-    const profile = await Profile.findOne({ user: req.user.id });
+    let profile = await Profile.findOne({ user: req.user.id });
     profile.experience.unshift(newExp);
     profile = await profile.save();
 
@@ -269,6 +270,7 @@ router.delete("/education/:education_id", auth, async (req, res) => {
 // @desc      Get user repos from Github
 // @access    Public
 router.get("/github/:username", (req, res) => {
+  res.json({ something: "something" });
   try {
     const options = {
       uri: `https://api.github.com/users/${

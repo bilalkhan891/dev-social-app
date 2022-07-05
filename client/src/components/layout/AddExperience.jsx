@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
-import { addExperience, getCurrentProfile } from "../../actions/profile";
+import { addExperience } from "../../actions/profile";
 import { useNavigate } from "react-router-dom";
 
 function AddExperience({ addExperience }) {
@@ -36,7 +36,6 @@ function AddExperience({ addExperience }) {
   const handleSubmit = () => (e) => {
     e.preventDefault();
     addExperience(formData, navigation);
-    getCurrentProfile();
   };
 
   return (
