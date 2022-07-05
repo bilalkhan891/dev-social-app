@@ -14,7 +14,7 @@ import { setAlert } from "./alert";
 export const getCurrentProfile = () => async (dispatch) => {
   try {
     const res = await axios.post("/api/profile/me");
-    console.log(res);
+
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -55,9 +55,7 @@ export const getProfileById = (userId) => async (dispatch) => {
       type: GET_PROFILE,
       payload: res.data,
     });
-    console.log(res);
   } catch (err) {
-    console.log(err);
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.state },
@@ -68,7 +66,7 @@ export const getProfileById = (userId) => async (dispatch) => {
 // Get Github Repos by ID
 export const getGithubRepos = (username) => async (dispatch) => {
   try {
-    const res = await axios.post(`/api/profile/github/${username}`);
+    const res = await axios.get(`/api/profile/github/${username}`);
 
     dispatch({
       type: GET_REPOS,
@@ -103,10 +101,8 @@ export const createProfile =
       dispatch(setAlert(edit ? "Profile Updated!" : "Profile Created!"));
       if (!edit) {
         history("/dashboard");
-        console.log("createProfile reducer: ", history());
       }
     } catch (err) {
-      console.log(err);
       const errors = await err.response?.data?.errors;
       if (errors) {
         errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
@@ -120,7 +116,6 @@ export const createProfile =
 
 export const addExperience = (formData, history) => async (dispatch) => {
   try {
-    console.log(formData);
     const config = { "Content-Type": "application/json" };
     const res = await axios.put("api/profile/experience", formData, config);
 
@@ -138,10 +133,8 @@ export const addExperience = (formData, history) => async (dispatch) => {
 
 export const addEducation = (formData, history) => async (dispatch) => {
   try {
-    console.log(formData);
     const config = { "Content-Type": "application/json" };
     const res = await axios.put("api/profile/education", formData, config);
-    console.log(res.data);
 
     dispatch({ type: UPDATE_PROFILE, payload: res.data.profile });
     dispatch(setAlert("Education Added", "info"));
@@ -149,7 +142,7 @@ export const addEducation = (formData, history) => async (dispatch) => {
     history("/dashboard");
   } catch (err) {
     const errors = await err.response?.data?.errors;
-    console.log(err.response.data);
+
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
@@ -159,12 +152,9 @@ export const deleteExperience = (id) => async (dispatch) => {
   try {
     const res = await axios.delete("api/profile/experience/" + id);
 
-    console.log(res);
-
     dispatch({ type: UPDATE_PROFILE, payload: res.data.profile });
   } catch (err) {
     const errors = await err.response?.data?.errors;
-    console.log(err.response.data);
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
@@ -175,12 +165,9 @@ export const deleteEducation = (id) => async (dispatch) => {
   try {
     const res = await axios.delete("api/profile/education/" + id);
 
-    console.log(res);
-
     dispatch({ type: UPDATE_PROFILE, payload: res.data.profile });
   } catch (err) {
     const errors = await err.response?.data?.errors;
-    console.log(err.response.data);
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }
@@ -191,13 +178,10 @@ export const deleteProfile = (id) => async (dispatch) => {
   try {
     const res = await axios.delete("api/profile/");
 
-    console.log(res);
-
     dispatch({ type: PROFILE_CLEAR, payload: res.data.profile });
     dispatch({ type: ACCOUNT_DELETED, payload: res.data.profile });
   } catch (err) {
     const errors = await err.response?.data?.errors;
-    console.log(err.response.data);
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, "danger")));
     }

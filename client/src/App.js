@@ -5,7 +5,6 @@ import Landing from "./components/layout/Landing";
 import NavBar from "./components/layout/NavBar";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
-import Alert from "./components/layout/Alert";
 import Dashboard from "./components/layout/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import Profile from "./components/layout/profiles/Profile";
@@ -15,6 +14,7 @@ import EditProfile from "./components/layout/EditProfile";
 import AddExperience from "./components/layout/AddExperience";
 import AddEducation from "./components/layout/AddEducation";
 import Profiles from "./components/layout/profiles/Profiles";
+import Posts from "./components/layout/posts/Posts";
 
 // Redux
 import { Provider } from "react-redux";
@@ -45,6 +45,7 @@ const App = () => {
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/add-experience" element={<AddExperience />} />
               <Route path="/add-education" element={<AddEducation />} />
+              <Route path="/posts" element={<Posts />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
