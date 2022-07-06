@@ -33,7 +33,6 @@ router.post("/", [postValidate, auth], async (req, res) => {
 
     res.json(post);
   } catch (err) {
-    console.log(err.message);
     res.status(500).send("Server Error!");
   }
   res.send();
@@ -48,7 +47,6 @@ router.get("/", auth, async (req, res) => {
 
     res.json(post);
   } catch (err) {
-    console.log(err.message);
     res.status(500).send("Server Error!");
   }
 });
@@ -62,12 +60,10 @@ router.get("/post/:post_id", auth, async (req, res) => {
     if (!post) return res.status(404).json({ msg: "post not found!" });
     res.json(post);
   } catch (err) {
-    console.log(err.message);
     if (err.kind === "ObjectId")
       return res.status(404).json({ msg: "post not found!" });
     res.status(500).send("Server Error!");
   }
-  res.send();
 });
 
 // @route   DELETE api/posts/post/:post_id
@@ -83,10 +79,8 @@ router.delete("/post/:post_id", auth, async (req, res) => {
       return res.status(401).json({ msg: "User not authorized!" });
 
     const removed = await post.remove();
-    console.log(removed);
     res.json({ removed });
   } catch (err) {
-    console.log(err.message);
     if (err.kind === "ObjectId")
       return res.status(404).json({ msg: "post not found!" });
     res.status(500).send("Server Error!");
@@ -98,7 +92,6 @@ router.delete("/post/:post_id", auth, async (req, res) => {
 // @desc    update post likes by id
 // @access  Private
 router.put("/like/:post_id", auth, async (req, res) => {
-  console.log(req.params.post_id);
   try {
     const post = await Post.findById(req.params.post_id);
 
@@ -114,7 +107,6 @@ router.put("/like/:post_id", auth, async (req, res) => {
       post.likes = post.likes.filter((like) =>
         like.user.toString() === req.user.id ? false : true
       );
-      console.log(post.likes);
     } else {
       post.likes.unshift({ user: req.user.id });
     }
@@ -123,7 +115,6 @@ router.put("/like/:post_id", auth, async (req, res) => {
 
     res.json(post.likes);
   } catch (err) {
-    console.log(err.message);
     if (err.kind === "ObjectId")
       return res.status(404).json({ msg: "post not found!" });
     res.status(500).send("Server Error!");
@@ -156,7 +147,6 @@ router.post("/comment/:post_id", [commentValidate, auth], async (req, res) => {
 
     res.json(post.comments);
   } catch (err) {
-    console.log(err.message);
     res.status(500).send("Server Error!");
   }
 });
@@ -195,7 +185,6 @@ router.delete("/comment/:post_id/:comment_id", auth, async (req, res) => {
   } catch (err) {
     if (err.kind === "ObjectId")
       return res.status(400).json({ msg: "comment not found!" });
-    console.log(err.message);
     res.status(500).send("Server Error!");
   }
 });

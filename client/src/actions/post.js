@@ -1,13 +1,22 @@
 import axios from "axios";
 import Alert from "../components/layout/Alert";
 import { setAlert } from "./alert";
-import { GET_POSTS, POST_ERROR, UPDATE_LIKES, UPDATE_POSTS, POST_DELETED } from "./Types";
+import {
+  GET_POSTS,
+  POST_ERROR,
+  UPDATE_LIKES,
+  UPDATE_POSTS,
+  POST_DELETED,
+  POST_UPDATE,
+  UPDATE_COMMENTS,
+  DELETE_COMMENT,
+} from "./Types";
 
 // Get posts
 export const getPosts = () => async (dispatch) => {
   try {
     const res = await axios.get("/api/posts");
-    console.log(res.data);
+
     dispatch({
       type: GET_POSTS,
       payload: res.data,
@@ -24,7 +33,11 @@ export const getPosts = () => async (dispatch) => {
 export const getPostById = (postId) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/posts/post/${postId}`);
-    console.log(res);
+
+    dispatch({
+      type: POST_UPDATE,
+      payload: res.data,
+    });
   } catch (err) {
     console.log(err);
     dispatch({
@@ -38,17 +51,16 @@ export const getPostById = (postId) => async (dispatch) => {
 export const deletePostById = (postId) => async (dispatch) => {
   try {
     const res = await axios.delete(`/api/posts/post/${postId}`);
-    console.log(res);
+
     dispatch({
       type: POST_DELETED,
       payload: res.data,
     });
     dispatch(setAlert("Post Deleted!", "info"));
   } catch (err) {
-    console.log("err:", err);
     dispatch({
       type: POST_ERROR,
-      payload: { msg: err?.response?.statusText, status: err.response.status },
+      payload: { msg: err?.response?.statusText, status: err?.response?.status },
     });
   }
 };
@@ -83,7 +95,6 @@ export const addNewPost = (text) => async (dispatch) => {
     };
     const res = await axios.post("/api/posts/", data, config);
 
-    console.log(res.data);
     dispatch({
       type: UPDATE_POSTS,
       payload: res.data,
@@ -107,6 +118,12 @@ export const addNewComment = (text, postId) => async (dispatch) => {
     const res = await axios.post(`/api/posts/comment/${postId}`, data, config);
 
     console.log(res);
+
+    dispatch({
+      type: UPDATE_COMMENTS,
+      payload: res.data,
+      postId,
+    });
   } catch (err) {
     console.log(err);
     dispatch({
@@ -119,9 +136,14 @@ export const addNewComment = (text, postId) => async (dispatch) => {
 // Delete Comment
 export const deleteComment = (postId, commentId) => async (dispatch) => {
   try {
-    const res = await axios.post(`/api/posts/comment/${postId}/${commentId}`);
+    const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
 
-    console.log(res);
+    console.log(res.data);
+
+    dispatch({
+      type: DELETE_COMMENT,
+      payload: res.data,
+    });
   } catch (err) {
     console.log(err);
     dispatch({
