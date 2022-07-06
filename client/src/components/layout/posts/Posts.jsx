@@ -5,8 +5,9 @@ import { getPosts } from "../../../actions/post";
 import Spinner from "../Spinner";
 import PostItem from "./partials/PostItem";
 import Alert from "../Alert";
+import { addNewPost } from "../../../actions/post";
 
-const Posts = ({ getPosts, posts, loading }) => {
+const Posts = ({ getPosts, posts, loading, addNewPost }) => {
   const [postBox, setPostBox] = useState("");
   useEffect(() => {
     getPosts();
@@ -16,7 +17,9 @@ const Posts = ({ getPosts, posts, loading }) => {
     setPostBox((v) => e.target.value);
   };
   const handleSubmit = () => (e) => {
-    console.log(e.target);
+    e.preventDefault();
+    addNewPost(postBox);
+    setPostBox("");
   };
   return loading ? (
     <Spinner />
@@ -46,9 +49,10 @@ const Posts = ({ getPosts, posts, loading }) => {
       </div>
 
       <div className="posts">
-        {posts.map((post) => (
-          <PostItem post={post} key={post._id} />
-        ))}
+        <h1>
+          Total Likes: {posts.reduce((total, post) => total + post.likes.length, 0)}
+        </h1>
+        <PostItem />
       </div>
     </div>
   );
@@ -57,6 +61,7 @@ const Posts = ({ getPosts, posts, loading }) => {
 Posts.porpTypes = {
   getPosts: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  addNewPost: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -64,4 +69,4 @@ const mapStateToProps = (state) => ({
   loading: state.loading,
 });
 
-export default connect(mapStateToProps, { getPosts })(Posts);
+export default connect(mapStateToProps, { getPosts, addNewPost })(Posts);

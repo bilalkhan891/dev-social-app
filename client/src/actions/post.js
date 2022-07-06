@@ -1,6 +1,7 @@
 import axios from "axios";
+import Alert from "../components/layout/Alert";
 import { setAlert } from "./alert";
-import { GET_POSTS, POST_ERROR, UPDATE_LIKES } from "./Types";
+import { GET_POSTS, POST_ERROR, UPDATE_LIKES, UPDATE_POSTS, POST_DELETED } from "./Types";
 
 // Get posts
 export const getPosts = () => async (dispatch) => {
@@ -38,8 +39,13 @@ export const deletePostById = (postId) => async (dispatch) => {
   try {
     const res = await axios.delete(`/api/posts/post/${postId}`);
     console.log(res);
+    dispatch({
+      type: POST_DELETED,
+      payload: res.data,
+    });
+    dispatch(setAlert("Post Deleted!", "info"));
   } catch (err) {
-    console.log(err);
+    console.log("err:", err);
     dispatch({
       type: POST_ERROR,
       payload: { msg: err?.response?.statusText, status: err.response.status },
@@ -71,13 +77,17 @@ export const handleLikes = (postId) => async (dispatch) => {
 // New Post
 export const addNewPost = (text) => async (dispatch) => {
   try {
-    const config = {};
+    const config = { "Content-Type": "application/json" };
     const data = {
       text,
     };
     const res = await axios.post("/api/posts/", data, config);
 
-    console.log(res);
+    console.log(res.data);
+    dispatch({
+      type: UPDATE_POSTS,
+      payload: res.data,
+    });
   } catch (err) {
     console.log(err);
     dispatch({
@@ -107,7 +117,7 @@ export const addNewComment = (text, postId) => async (dispatch) => {
 };
 
 // Delete Comment
-export const deleteNewComment = (postId, commentId) => async (dispatch) => {
+export const deleteComment = (postId, commentId) => async (dispatch) => {
   try {
     const res = await axios.post(`/api/posts/comment/${postId}/${commentId}`);
 
