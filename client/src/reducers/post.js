@@ -5,6 +5,9 @@ import {
   UPDATE_COMMENTS,
   UPDATE_POSTS,
   POST_DELETED,
+  POST_UPDATE,
+  POST_LOADING,
+  DELETE_COMMENT,
 } from "../actions/Types";
 
 const initialState = {
@@ -18,6 +21,11 @@ const initialState = {
 export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
+    case POST_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
     case GET_POSTS:
       return {
         ...state,
@@ -30,6 +38,13 @@ export default function (state = initialState, action) {
         posts: [payload, ...state.posts],
         loading: false,
       };
+    case POST_UPDATE:
+      console.log("POST_UPDATE");
+      return {
+        ...state,
+        post: payload,
+        loading: false,
+      };
     case POST_ERROR:
       return {
         ...state,
@@ -40,9 +55,9 @@ export default function (state = initialState, action) {
       return {
         ...state,
         posts: state.posts.filter((post) => {
-          console.log(payload.removed._id, post._id);
           return post._id === payload.removed._id ? false : true;
         }),
+        post: state.post?._id === payload.removed._id ? null : state.post,
         loading: false,
       };
     case UPDATE_LIKES:
@@ -60,13 +75,19 @@ export default function (state = initialState, action) {
     case UPDATE_COMMENTS:
       return {
         ...state,
-        posts: state.posts.map((post) => {
-          if (post._id === action.postId) {
-            post.comments = payload;
-            return post;
-          }
-          return post;
-        }),
+        post: {
+          ...state.post,
+          comments: payload,
+        },
+        loading: false,
+      };
+    case DELETE_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: payload,
+        },
         loading: false,
       };
     default:
@@ -74,6 +95,5 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
       };
-      break;
   }
 }

@@ -15,6 +15,7 @@ import AddExperience from "./components/layout/AddExperience";
 import AddEducation from "./components/layout/AddEducation";
 import Profiles from "./components/layout/profiles/Profiles";
 import Posts from "./components/layout/posts/Posts";
+import Post from "./components/layout/posts/Post";
 
 // Redux
 import { Provider } from "react-redux";
@@ -46,6 +47,7 @@ const App = () => {
               <Route path="/add-experience" element={<AddExperience />} />
               <Route path="/add-education" element={<AddEducation />} />
               <Route path="/posts" element={<Posts />} />
+              <Route path="/post/:id" element={<Post />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
