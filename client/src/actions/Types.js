@@ -20,4 +20,7 @@ export const PROFILE_CLEAR = "PROFILE_CLEAR";
 export const ACCOUNT_DELETED = "ACCOUNT_DELETED";
 export const GET_POSTS = "GET_POSTS";
 export const POST_ERROR = "POST_ERROR";
+export const UPDATE_POSTS = "UPDATE_POSTS";
+export const POST_DELETED = "POST_DELETED";
 export const UPDATE_LIKES = "UPDATE_LIKES";
+export const UPDATE_COMMENTS = "UPDATE_COMMENTS";
