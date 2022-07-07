@@ -1,5 +1,5 @@
 {
-  "mongoURI": "mongodb://localhost:27017",
+  "mongoURI": "mongodb+srv://testuser:testuser@testcluster.8eazrgn.mongodb.net/?retryWrites=true&w=majority",
   "jwtSecret": "mySecret",
   "githubClientId": "Iv1.d92db3d41d8b5dc3",
   "githubSecret": "6e810c3c98f6aba82f1b905475118311c275e92b"
