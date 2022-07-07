@@ -8,7 +8,6 @@ import {
   getPostById,
 } from "../../../actions/post";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Moment } from "react-moment";
 import Spinner from "../Spinner";
 
 const Post = ({
