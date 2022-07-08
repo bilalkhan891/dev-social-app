@@ -27,5 +27,4 @@ yarn-error.log*
 
 # db config
 config/default.json
-config/production.json
-node_modules
+config/production.json 
