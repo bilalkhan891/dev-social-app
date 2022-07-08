@@ -11,7 +11,10 @@ const utils = require("./utils/utils");
 connectDB();
 
 // Init Middleware
-app.use(express.json());
+app.use(express.json({ extended: false }));
+
+// ... other app.use middleware
+// app.use(express.static(path.join(__dirname, "client", "build")));
 
 // Define Routes
 app.use("/api/users", require("./routes/api/users"));
